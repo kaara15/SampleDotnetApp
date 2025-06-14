@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(options => {
         var cacheFactory = scope.ServiceProvider.GetRequiredService<ICacheFactory<DataCacheDataModel>>();
         var dataCacheService = cacheFactory.GetDefaultCache();
         if(!string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(name))
-        {    
+        {
 
             var dataCacheDataModel = new DataCacheDataModel
             {
