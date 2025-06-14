@@ -1,0 +1,63 @@
+@model SampleDotnetApp.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<h2 class="text-center mt-4">@ViewData["Title"]</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Register" method="post" id="registerForm" class="p-4 bg-white text-dark">
+                <div class="form-group mb-3">
+                    <label asp-for="FullName" id="nameRegisterLabel" class="form-label">Full Name</label>
+                    <input asp-for="FullName" id="nameRegisterInput" class="form-control" placeholder="Enter your full name" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Email" id="emailRegisterLabel" class="form-label">Email</label>
+                    <input asp-for="Email" id="emailRegisterInput" class="form-control" placeholder="Enter your email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Password" id="passwordRegisterLabel" class="form-label">Password</label>
+                    <input asp-for="Password" id="passwordRegisterInput" class="form-control" type="password" placeholder="Enter your password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="ConfirmPassword" id="confirmPasswordRegisterLabel" class="form-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword"  id="confirmPasswordRegisterInput" class="form-control" type="password" placeholder="Confirm your password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <input type="hidden" name="HashedPassword" id="HashedPassword" />
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+            <div class="text-center mt-3">
+                <a asp-controller="Account" asp-action="Login" class="btn btn-secondary w-100">Back to Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            const passwordInput = document.getElementById("Password");
+            const confirmPasswordInput = document.getElementById("ConfirmPassword");
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                alert("Passwords do not match!");
+                return;
+            }
+            const hashedPasswordInput = document.getElementById('HashedPassword');
+            const hashedPassword = CryptoJS.SHA256(passwordInput.value).toString();
+            hashedPasswordInput.value = hashedPassword;
+            passwordInput.value = '';
+            confirmPasswordInput.value = '';
+            this.submit(); // Now submit the form
+        });
+    </script>
+}
+@if (TempData["AlertMessage"] != null) {
+    <script>
+        alert('@TempData["AlertMessage"]');
+    </script>
+}
