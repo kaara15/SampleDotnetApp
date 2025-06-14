@@ -47,7 +47,7 @@ builder.Services.AddAuthentication(options => {
         var email = ctx.Principal.FindFirst(c => c.Type == ClaimTypes.Email)?.Value;
         var name = ctx.Principal.FindFirst(c => c.Type == ClaimTypes.Name)?.Value;
 
-        var cacheFactory = scope.ServiceProvider.GetRequiredService<ICacheFactory<DataCacheDataModel>>();
+        var cacheFactory = scope.ServiceProvider.GetRequiredServcascnkanscjknajksncknaskocnklasice<ICacheFactory<DataCacheDataModel>>();
         var dataCacheService = cacheFactory.GetDefaultCache();
         if(!string.IsNullOrWhiteSpace(email) && !string.IsNullOrWhiteSpace(name))
         {    
