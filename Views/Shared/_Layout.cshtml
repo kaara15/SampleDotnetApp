@@ -40,7 +40,7 @@
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
                         <li class="nav-item">
-                            <span class="nav-link text-light" id="nameItem">Hello, @User.Identity.Name!</span>
+                            <span class="nav-link text-dark" id="nameItem">Hello, @User.Identity.Name!</span>
                         </li>
                         <li class="nav-item">
                             <form asp-controller="Account" asp-action="Logout" method="post">
@@ -123,7 +123,7 @@
             }
             
             if(navItem) {
-                navItem.classList.remove('text-primary');
+                navItem.classList.remove('text-dark');
                 navItem.classList.add('text-light');
             }
             
@@ -192,7 +192,7 @@
                 }
 
                 if(navItem){
-                    navItem.classList.remove('text-primary');
+                    navItem.classList.remove('text-dark');
                     navItem.classList.add('text-light');
                 }
 
@@ -254,7 +254,7 @@
                 
                 if(navItem) {
                     navItem.classList.remove('text-light');
-                    navItem.classList.add('text-primary');
+                    navItem.classList.add('text-dark');
                 }
                 
                 if(loginDiv) {

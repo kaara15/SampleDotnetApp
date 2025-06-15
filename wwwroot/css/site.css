@@ -94,7 +94,7 @@ footer p {
 /* Light Theme */
 .theme-light {
     font-family: 'Arial', sans-serif;
-    background-color: #e9ecef; /* Changed from bg-white to light gray */
+    background-color: #e9ecef;
     color: #343a40;
 }
 .theme-light .navbar {
