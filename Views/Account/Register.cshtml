@@ -35,6 +35,22 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertModalLabel">Alert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["AlertMessage"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -54,10 +70,6 @@
             confirmPasswordInput.value = '';
             this.submit(); // Now submit the form
         });
-    </script>
-}
-@if (TempData["AlertMessage"] != null) {
-    <script>
-        alert('@TempData["AlertMessage"]');
+ 
     </script>
 }

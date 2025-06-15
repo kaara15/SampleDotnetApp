@@ -149,7 +149,6 @@ footer p {
     color: #90caf9;
 }
 .theme-dark .btn {
-    
     background-color: #ffbf00;
     color: #121212;
     border: 1px solid #ffbf00;
@@ -188,9 +187,7 @@ footer p {
 
 /* Toggle Button */
 .theme-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    position: relative;
     background-color: #007bff;
     color: #ffffff;
     border: none;

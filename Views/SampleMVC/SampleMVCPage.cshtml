@@ -1,33 +1,16 @@
-@if (TempData["AlertMessage"] != null)
-{
-    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="alertModalLabel">Alert</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @TempData["AlertMessage"]
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" id="modalHeader">
+                <h5 class="modal-title" id="alertModalLabel">Alert</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center" id="modalBody">
+                @TempData["AlertMessage"]
+            </div>
+            <div class="modal-footer d-flex justify-content-center align-items-center" id="modalFooter">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-    <script>
-        const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
-        const bodyTheme = document.body.className;
-
-        // Apply theme-specific styles to modal dynamically
-        const modalContent = document.querySelector('#alertModal .modal-content');
-        if (bodyTheme === 'theme-dark') {
-            modalContent.classList.add('bg-dark', 'text-light');
-        } else {
-            modalContent.classList.remove('bg-dark', 'text-light');
-        }
-
-        alertModal.show();
-    </script>
-}
+</div>
