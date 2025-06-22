@@ -55,6 +55,94 @@
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+        const registerDiv = document.getElementById('registerForm');
+        const nameRegisterLabel = document.getElementById('nameRegisterLabel');
+        const nameRegisterInput = document.getElementById('nameRegisterInput');
+        const emailRegisterLabel = document.getElementById('emailRegisterLabel');
+        const emailRegisterInput = document.getElementById('emailRegisterInput');
+        const passwordRegisterLabel = document.getElementById('passwordRegisterLabel');
+        const passwordRegisterInput = document.getElementById('passwordRegisterInput');
+        const confirmPasswordRegisterLabel = document.getElementById('confirmPasswordRegisterLabel');
+        const confirmPasswordRegisterInput = document.getElementById('confirmPasswordRegisterInput');
+        const savedThemeRegisterComponent = localStorage.getItem('theme') || 'theme-light';
+
+        if (savedThemeRegisterComponent === 'theme-dark') {
+            registerDiv.classList.remove('bg-white', 'text-dark');
+            registerDiv.classList.add('bg-dark', 'text-light');
+            nameRegisterLabel.classList.remove('text-dark');
+            nameRegisterLabel.classList.add('text-light');
+            nameRegisterInput.classList.remove('text-dark', 'bg-white');
+            nameRegisterInput.classList.add('text-light', 'bg-dark');
+            nameRegisterInput.classList.add('dark-theme');
+            emailRegisterLabel.classList.remove('text-dark');
+            emailRegisterLabel.classList.add('text-light');
+            emailRegisterInput.classList.remove('text-dark', 'bg-white');
+            emailRegisterInput.classList.add('text-light', 'bg-dark');
+            emailRegisterInput.classList.add('dark-theme');
+            passwordRegisterLabel.classList.remove('text-dark');
+            passwordRegisterLabel.classList.add('text-light');
+            passwordRegisterInput.classList.remove('text-dark', 'bg-white');
+            passwordRegisterInput.classList.add('text-light', 'bg-dark');
+            passwordRegisterInput.classList.add('dark-theme');
+            confirmPasswordRegisterLabel.classList.remove('text-dark');
+            confirmPasswordRegisterLabel.classList.add('text-light');
+            confirmPasswordRegisterInput.classList.remove('text-dark', 'bg-white');
+            confirmPasswordRegisterInput.classList.add('text-light', 'bg-dark');
+            confirmPasswordRegisterInput.classList.add('dark-theme');
+        }
+
+        document.addEventListener('themeToggle', function (event) {
+            console.log(event)
+            const newTheme = event.detail.message;
+            if (newTheme === 'theme-dark') {
+                registerDiv.classList.remove('bg-white', 'text-dark');
+                registerDiv.classList.add('bg-dark', 'text-light');
+                nameRegisterLabel.classList.remove('text-dark');
+                nameRegisterLabel.classList.add('text-light');
+                nameRegisterInput.classList.remove('text-dark', 'bg-white');
+                nameRegisterInput.classList.add('text-light', 'bg-dark');
+                nameRegisterInput.classList.add('dark-theme');
+                emailRegisterLabel.classList.remove('text-dark');
+                emailRegisterLabel.classList.add('text-light');
+                emailRegisterInput.classList.remove('text-dark', 'bg-white');
+                emailRegisterInput.classList.add('text-light', 'bg-dark');
+                emailRegisterInput.classList.add('dark-theme');
+                passwordRegisterLabel.classList.remove('text-dark');
+                passwordRegisterLabel.classList.add('text-light');
+                passwordRegisterInput.classList.remove('text-dark', 'bg-white');
+                passwordRegisterInput.classList.add('text-light', 'bg-dark');
+                passwordRegisterInput.classList.add('dark-theme');
+                confirmPasswordRegisterLabel.classList.remove('text-dark');
+                confirmPasswordRegisterLabel.classList.add('text-light');
+                confirmPasswordRegisterInput.classList.remove('text-dark', 'bg-white');
+                confirmPasswordRegisterInput.classList.add('text-light', 'bg-dark');
+                confirmPasswordRegisterInput.classList.add('dark-theme');
+            } else {
+                registerDiv.classList.remove('bg-dark', 'text-light');
+                registerDiv.classList.add('bg-white', 'text-dark');
+                nameRegisterLabel.classList.remove('text-light');
+                nameRegisterLabel.classList.add('text-dark');
+                nameRegisterInput.classList.remove('text-light', 'bg-dark');
+                nameRegisterInput.classList.add('text-dark', 'bg-white');
+                nameRegisterInput.classList.remove('dark-theme');
+                emailRegisterLabel.classList.remove('text-light');
+                emailRegisterLabel.classList.add('text-dark');
+                emailRegisterInput.classList.remove('text-light', 'bg-dark');
+                emailRegisterInput.classList.add('text-dark', 'bg-white');
+                emailRegisterInput.classList.remove('dark-theme');
+                passwordRegisterLabel.classList.remove('text-light');
+                passwordRegisterLabel.classList.add('text-dark');
+                passwordRegisterInput.classList.remove('text-light', 'bg-dark');
+                passwordRegisterInput.classList.add('text-dark', 'bg-white');
+                passwordRegisterInput.classList.remove('dark-theme');
+                confirmPasswordRegisterLabel.classList.remove('text-light');
+                confirmPasswordRegisterLabel.classList.add('text-dark');
+                confirmPasswordRegisterInput.classList.remove('text-light', 'bg-dark');
+                confirmPasswordRegisterInput.classList.add('text-dark', 'bg-white');
+                confirmPasswordRegisterInput.classList.remove('dark-theme');
+            }
+        });
+
         document.getElementById("registerForm").addEventListener("submit", async function (e) {
             e.preventDefault(); // Prevent the default form submission
             const passwordInput = document.getElementById("Password");

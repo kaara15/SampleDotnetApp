@@ -7,6 +7,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            main {
+                flex: 1;
+                display: flex;
+            }
+
+            #sidebar {
+                height: 100%;
+            }
+
+            .col {
+                flex: 1;
+            }
+
         #navbarNav ul {
             display: flex;
             align-items: center;
@@ -23,6 +43,29 @@
         .modal-header-dark {
             background-color: #ffbf00 !important;
             color: #000 !important;
+        }
+
+        .side-nav-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            min-height: 50px; 
+        }
+        .theme-dark a {
+            color: #ffbf00;
+        }
+        .theme-dark a:hover {
+            color: #ffaa00;
+        }
+        .theme-light .side-nav-item:hover {
+            background-color: #dbe0e9;
+        }
+        .theme-dark .side-nav-item:hover {
+            background-color: #343a40;
+        }
+        .nav-link {
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -66,10 +109,28 @@
             </div>
         </nav>
     </header>
-    <main class="container mt-4">
-        @RenderBody()
+    <main class="container-fluid p-0 m-0">
+        <div class="row flex-grow-1">
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar bg-light text-dark p-0">
+                    <div class="position-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item side-nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Home/Call">
+                                    <i class="bi bi-person"></i>Video Call
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            }
+            <div class="col">
+                @RenderBody()
+            </div>
+        </div>
     </main>
-    <footer id="footer" class="bg-white text-secondary text-center py-3 mt-5 border-top">
+    <footer id="footer" class="bg-white text-secondary text-center py-3 border-top">
         <p class="mb-0">&copy; @DateTime.Now.Year - My Dotnet App</p>
     </footer>
     @RenderSection("Scripts", required: false)
@@ -83,21 +144,7 @@
         const appHeading = document.getElementById('appHeading');
         const navItem = document.getElementById('nameItem');
 
-        const loginDiv = document.getElementById('loginForm');
-        const emailLabel = document.getElementById('emailLabel');
-        const emailInput = document.getElementById('emailInput');
-        const passwordLabel = document.getElementById('passwordLabel');
-        const passwordInput = document.getElementById('passwordInput');
-
-        const registerDiv = document.getElementById('registerForm');
-        const nameRegisterLabel = document.getElementById('nameRegisterLabel');
-        const nameRegisterInput = document.getElementById('nameRegisterInput');
-        const emailRegisterLabel = document.getElementById('emailRegisterLabel');
-        const emailRegisterInput = document.getElementById('emailRegisterInput');
-        const passwordRegisterLabel = document.getElementById('passwordRegisterLabel');
-        const passwordRegisterInput = document.getElementById('passwordRegisterInput');
-        const confirmPasswordRegisterLabel = document.getElementById('confirmPasswordRegisterLabel');
-        const confirmPasswordRegisterInput = document.getElementById('confirmPasswordRegisterInput');
+        const sidebar = document.getElementById('sidebar');
 
         const modalFooter = document.getElementById('modalFooter');
         const modalBody = document.getElementById('modalBody');
@@ -106,6 +153,7 @@
         body.className = savedTheme;
 
         if (savedTheme === 'theme-dark') {
+
             navbar.classList.remove('navbar-light', 'bg-white');
             navbar.classList.add('navbar-dark', 'bg-dark');
             footer.classList.remove('bg-white', 'text-secondary');
@@ -126,45 +174,10 @@
                 navItem.classList.remove('text-dark');
                 navItem.classList.add('text-light');
             }
-            
-            if(loginDiv) {
-                loginDiv.classList.remove('bg-white', 'text-dark');
-                loginDiv.classList.add('bg-dark', 'text-light');
-                emailLabel.classList.remove('text-dark');
-                emailLabel.classList.add('text-light');
-                emailInput.classList.remove('text-dark', 'bg-white');
-                emailInput.classList.add('text-light', 'bg-dark');
-                emailInput.classList.add('dark-theme');
-                passwordLabel.classList.remove('text-dark');
-                passwordLabel.classList.add('text-light');
-                passwordInput.classList.remove('text-dark', 'bg-white');
-                passwordInput.classList.add('text-light', 'bg-dark');
-                passwordInput.classList.add('dark-theme');
-            }
 
-            if(registerDiv) {
-                registerDiv.classList.remove('bg-white', 'text-dark');
-                registerDiv.classList.add('bg-dark', 'text-light');
-                nameRegisterLabel.classList.remove('text-dark');
-                nameRegisterLabel.classList.add('text-light');
-                nameRegisterInput.classList.remove('text-dark', 'bg-white');
-                nameRegisterInput.classList.add('text-light', 'bg-dark');
-                nameRegisterInput.classList.add('dark-theme');
-                emailRegisterLabel.classList.remove('text-dark');
-                emailRegisterLabel.classList.add('text-light');
-                emailRegisterInput.classList.remove('text-dark', 'bg-white');
-                emailRegisterInput.classList.add('text-light', 'bg-dark');
-                emailRegisterInput.classList.add('dark-theme');
-                passwordRegisterLabel.classList.remove('text-dark');
-                passwordRegisterLabel.classList.add('text-light');
-                passwordRegisterInput.classList.remove('text-dark', 'bg-white');
-                passwordRegisterInput.classList.add('text-light', 'bg-dark');
-                passwordRegisterInput.classList.add('dark-theme');
-                confirmPasswordRegisterLabel.classList.remove('text-dark');
-                confirmPasswordRegisterLabel.classList.add('text-light');
-                confirmPasswordRegisterInput.classList.remove('text-dark', 'bg-white');
-                confirmPasswordRegisterInput.classList.add('text-light', 'bg-dark');
-                confirmPasswordRegisterInput.classList.add('dark-theme');
+            if(sidebar) {
+                sidebar.classList.remove('bg-light', 'text-dark');
+                sidebar.classList.add('theme-dark-secondary', 'text-light');
             }
         }
 
@@ -196,45 +209,11 @@
                     navItem.classList.add('text-light');
                 }
 
-                if(loginDiv) {
-                    loginDiv.classList.remove('bg-white', 'text-dark');
-                    loginDiv.classList.add('bg-dark', 'text-light');
-                    emailLabel.classList.remove('text-dark');
-                    emailLabel.classList.add('text-light');
-                    emailInput.classList.remove('text-dark', 'bg-white');
-                    emailInput.classList.add('text-light', 'bg-dark');
-                    emailInput.classList.add('dark-theme');
-                    passwordLabel.classList.remove('text-dark');
-                    passwordLabel.classList.add('text-light');
-                    passwordInput.classList.remove('text-dark', 'bg-white');
-                    passwordInput.classList.add('text-light', 'bg-dark');
-                    passwordInput.classList.add('dark-theme');
+                if(sidebar) {
+                    sidebar.classList.remove('bg-light', 'text-dark');
+                    sidebar.classList.add('theme-dark-secondary', 'text-light');
                 }
 
-                if(registerDiv) {
-                    registerDiv.classList.remove('bg-white', 'text-dark');
-                    registerDiv.classList.add('bg-dark', 'text-light');
-                    nameRegisterLabel.classList.remove('text-dark');
-                    nameRegisterLabel.classList.add('text-light');
-                    nameRegisterInput.classList.remove('text-dark', 'bg-white');
-                    nameRegisterInput.classList.add('text-light', 'bg-dark');
-                    nameRegisterInput.classList.add('dark-theme');
-                    emailRegisterLabel.classList.remove('text-dark');
-                    emailRegisterLabel.classList.add('text-light');
-                    emailRegisterInput.classList.remove('text-dark', 'bg-white');
-                    emailRegisterInput.classList.add('text-light', 'bg-dark');
-                    emailRegisterInput.classList.add('dark-theme');
-                    passwordRegisterLabel.classList.remove('text-dark');
-                    passwordRegisterLabel.classList.add('text-light');
-                    passwordRegisterInput.classList.remove('text-dark', 'bg-white');
-                    passwordRegisterInput.classList.add('text-light', 'bg-dark');
-                    passwordRegisterInput.classList.add('dark-theme');
-                    confirmPasswordRegisterLabel.classList.remove('text-dark');
-                    confirmPasswordRegisterLabel.classList.add('text-light');
-                    confirmPasswordRegisterInput.classList.remove('text-dark', 'bg-white');
-                    confirmPasswordRegisterInput.classList.add('text-light', 'bg-dark');
-                    confirmPasswordRegisterInput.classList.add('dark-theme');
-                }
             } else {
                 navbar.classList.remove('navbar-dark', 'bg-dark');
                 navbar.classList.add('navbar-light', 'bg-white');
@@ -257,46 +236,16 @@
                     navItem.classList.add('text-dark');
                 }
                 
-                if(loginDiv) {
-                    loginDiv.classList.remove('bg-dark', 'text-light');
-                    loginDiv.classList.add('bg-white', 'text-dark');
-                    emailLabel.classList.remove('text-light');
-                    emailLabel.classList.add('text-dark');
-                    emailInput.classList.remove('text-light', 'bg-dark');
-                    emailInput.classList.add('text-dark', 'bg-white');
-                    emailInput.classList.remove('dark-theme');
-                    passwordLabel.classList.remove('text-light');
-                    passwordLabel.classList.add('text-dark');
-                    passwordInput.classList.remove('text-light', 'bg-dark');
-                    passwordInput.classList.add('text-dark', 'bg-white');
-                    passwordInput.classList.remove('dark-theme');
-                }
-
-                if(registerDiv) {
-                    registerDiv.classList.remove('bg-dark', 'text-light');
-                    registerDiv.classList.add('bg-white', 'text-dark');
-                    nameRegisterLabel.classList.remove('text-light');
-                    nameRegisterLabel.classList.add('text-dark');
-                    nameRegisterInput.classList.remove('text-light', 'bg-dark');
-                    nameRegisterInput.classList.add('text-dark', 'bg-white');
-                    nameRegisterInput.classList.remove('dark-theme');
-                    emailRegisterLabel.classList.remove('text-light');
-                    emailRegisterLabel.classList.add('text-dark');
-                    emailRegisterInput.classList.remove('text-light', 'bg-dark');
-                    emailRegisterInput.classList.add('text-dark', 'bg-white');
-                    emailRegisterInput.classList.remove('dark-theme');
-                    passwordRegisterLabel.classList.remove('text-light');
-                    passwordRegisterLabel.classList.add('text-dark');
-                    passwordRegisterInput.classList.remove('text-light', 'bg-dark');
-                    passwordRegisterInput.classList.add('text-dark', 'bg-white');
-                    passwordRegisterInput.classList.remove('dark-theme');
-                    confirmPasswordRegisterLabel.classList.remove('text-light');
-                    confirmPasswordRegisterLabel.classList.add('text-dark');
-                    confirmPasswordRegisterInput.classList.remove('text-light', 'bg-dark');
-                    confirmPasswordRegisterInput.classList.add('text-dark', 'bg-white');
-                    confirmPasswordRegisterInput.classList.remove('dark-theme');
+                if(sidebar) {
+                    sidebar.classList.remove('theme-dark-secondary', 'text-light');
+                    sidebar.classList.add('bg-light', 'text-dark');
                 }
             }
+
+            const event = new CustomEvent('themeToggle', {
+                detail: { message: newTheme }
+            });
+            document.dispatchEvent(event);
 
             localStorage.setItem('theme', newTheme);
         });

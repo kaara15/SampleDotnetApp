@@ -17,5 +17,14 @@ namespace SampleDotnetApp.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
+
+        public IActionResult Call()
+        {
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Account");
+        }
     }
 }

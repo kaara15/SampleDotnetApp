@@ -50,6 +50,61 @@
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
+        const loginDiv = document.getElementById('loginForm');
+        const emailLabel = document.getElementById('emailLabel');
+        const emailInput = document.getElementById('emailInput');
+        const passwordLabel = document.getElementById('passwordLabel');
+        const passwordInput = document.getElementById('passwordInput');
+        const savedThemeLoginComponent = localStorage.getItem('theme') || 'theme-light';
+
+        if (savedThemeLoginComponent === 'theme-dark') {
+            loginDiv.classList.remove('bg-white', 'text-dark');
+            loginDiv.classList.add('bg-dark', 'text-light');
+            emailLabel.classList.remove('text-dark');
+            emailLabel.classList.add('text-light');
+            emailInput.classList.remove('text-dark', 'bg-white');
+            emailInput.classList.add('text-light', 'bg-dark');
+            emailInput.classList.add('dark-theme');
+            passwordLabel.classList.remove('text-dark');
+            passwordLabel.classList.add('text-light');
+            passwordInput.classList.remove('text-dark', 'bg-white');
+            passwordInput.classList.add('text-light', 'bg-dark');
+            passwordInput.classList.add('dark-theme');
+        }
+
+
+        document.addEventListener('themeToggle', function (event) {
+            console.log(event)
+            const newTheme = event.detail.message;
+            if (newTheme === 'theme-dark') {
+                loginDiv.classList.remove('bg-white', 'text-dark');
+                loginDiv.classList.add('bg-dark', 'text-light');
+                emailLabel.classList.remove('text-dark');
+                emailLabel.classList.add('text-light');
+                emailInput.classList.remove('text-dark', 'bg-white');
+                emailInput.classList.add('text-light', 'bg-dark');
+                emailInput.classList.add('dark-theme');
+                passwordLabel.classList.remove('text-dark');
+                passwordLabel.classList.add('text-light');
+                passwordInput.classList.remove('text-dark', 'bg-white');
+                passwordInput.classList.add('text-light', 'bg-dark');
+                passwordInput.classList.add('dark-theme');
+            } else {
+                loginDiv.classList.remove('bg-dark', 'text-light');
+                loginDiv.classList.add('bg-white', 'text-dark');
+                emailLabel.classList.remove('text-light');
+                emailLabel.classList.add('text-dark');
+                emailInput.classList.remove('text-light', 'bg-dark');
+                emailInput.classList.add('text-dark', 'bg-white');
+                emailInput.classList.remove('dark-theme');
+                passwordLabel.classList.remove('text-light');
+                passwordLabel.classList.add('text-dark');
+                passwordInput.classList.remove('text-light', 'bg-dark');
+                passwordInput.classList.add('text-dark', 'bg-white');
+                passwordInput.classList.remove('dark-theme');
+            }
+        });
+
         document.getElementById('loginForm').addEventListener('submit', function (e) {
             const passwordField = document.getElementById('passwordInput');
             const hashedPasswordField = document.getElementById('HashedPassword');

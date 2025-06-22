@@ -206,3 +206,7 @@ input::placeholder {
 input.dark-theme::placeholder {
     color: #b4b4b4;
 }
+
+.theme-dark-secondary {
+    background-color: #1c1d1e;
+}
