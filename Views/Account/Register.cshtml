@@ -36,16 +36,16 @@
         </div>
     </div>
     <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="alertModalLabel">Alert</h5>
+                <div class="modal-header" id="modalHeader">
+                    <h5 class="modal-title" id="alertModalLabel">Alert!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-center" id="modalBody">
                     @TempData["AlertMessage"]
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer d-flex justify-content-center align-items-center" id="modalFooter">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -145,10 +145,25 @@
 
         document.getElementById("registerForm").addEventListener("submit", async function (e) {
             e.preventDefault(); // Prevent the default form submission
-            const passwordInput = document.getElementById("Password");
-            const confirmPasswordInput = document.getElementById("ConfirmPassword");
+            const nameInput = document.getElementById("nameRegisterInput");
+            const emailInput = document.getElementById("emailRegisterInput");
+            const passwordInput = document.getElementById("passwordRegisterInput");
+            const confirmPasswordInput = document.getElementById("confirmPasswordRegisterInput");
+            
+            if(passwordInput.value == "" || confirmPasswordInput.value == "" || nameInput.value == "" || emailInput.value == "") {
+                e.preventDefault();
+                const modalBody = document.getElementById('modalBody');
+                modalBody.textContent = "Fill the required fields to proceed!";
+                const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+                alertModal.show();
+                return;
+            }
             if (passwordInput.value !== confirmPasswordInput.value) {
-                alert("Passwords do not match!");
+                e.preventDefault();
+                const modalBody = document.getElementById('modalBody');
+                modalBody.textContent = "Passwords do not match!";
+                const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+                alertModal.show();
                 return;
             }
             const hashedPasswordInput = document.getElementById('HashedPassword');

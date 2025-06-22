@@ -106,7 +106,16 @@
         });
 
         document.getElementById('loginForm').addEventListener('submit', function (e) {
+            const emailField = document.getElementById("emailInput");
             const passwordField = document.getElementById('passwordInput');
+            if(passwordField.value == "" || emailField.value == "") {
+                e.preventDefault();
+                const modalBody = document.getElementById('modalBody');
+                modalBody.textContent = "Username or Password has not been entered!";
+                const alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+                alertModal.show();
+                return;
+            }
             const hashedPasswordField = document.getElementById('HashedPassword');
             hashedPasswordField.value = CryptoJS.SHA256(passwordField.value).toString();
             passwordField.value = ''; // Clear the original password field
