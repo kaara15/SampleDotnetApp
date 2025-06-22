@@ -23,7 +23,7 @@ namespace SampleDotnetApp.Controllers
         {
             if(User.Identity != null && User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("SampleMVCPage", "SampleMVC");
+                return RedirectToAction("Account", "Home");
             }
             return View();
         }
@@ -33,7 +33,7 @@ namespace SampleDotnetApp.Controllers
         {
             if(User.Identity != null && User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("SampleMVCPage", "SampleMVC");
+                return RedirectToAction("Account", "Home");
             }
             return View();
         }
@@ -114,7 +114,7 @@ namespace SampleDotnetApp.Controllers
                                                 ExpiresUtc = DateTimeOffset.UtcNow.AddHours(2)
                                             });
                 TempData["AlertMessage"] = "Login successful.";
-                return RedirectToAction("SampleMVCPage", "SampleMVC");
+                return RedirectToAction("Account", "Home");
             }
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             TempData["AlertMessage"] = "Invalid login attempt.";
@@ -149,7 +149,7 @@ namespace SampleDotnetApp.Controllers
                 return RedirectToAction("Login", "Account");
             }
             TempData["AlertMessage"] = "Login successful.";
-            return RedirectToAction("SampleMVCPage", "SampleMVC");
+            return RedirectToAction("Account", "Home");
         }
     }
 }
