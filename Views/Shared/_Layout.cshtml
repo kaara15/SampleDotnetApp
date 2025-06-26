@@ -7,25 +7,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <style>
-            html, body {
-                height: 100%;
-                margin: 0;
-                display: flex;
-                flex-direction: column;
-            }
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
 
-            main {
-                flex: 1;
-                display: flex;
-            }
+        main {
+            flex: 1;
+            display: flex;
+            max-width: 100%;
+        }
 
-            #sidebar {
-                height: 100%;
-            }
+        #sidebar {
+            height: 100%;
+            max-width: 100%;
+        }
 
-            .col {
-                flex: 1;
-            }
+        .col {
+            flex: 1;
+            padding: 0px;
+        }
 
         #navbarNav ul {
             display: flex;
@@ -33,13 +37,16 @@
             justify-content: space-between;
             gap: 1rem;
         }
+
         #themeToggle {
             margin-left: auto;
             margin-right: 0.5rem;
         }
+
         .nav-item span, .nav-item form {
             white-space: nowrap;
         }
+        
         .modal-header-dark {
             background-color: #ffbf00 !important;
             color: #000 !important;
@@ -52,20 +59,36 @@
             padding: 10px 0;
             min-height: 50px; 
         }
+
         .theme-dark a {
             color: #ffbf00;
         }
+
         .theme-dark a:hover {
             color: #ffaa00;
         }
+
         .theme-light .side-nav-item:hover {
             background-color: #dbe0e9;
         }
+
         .theme-dark .side-nav-item:hover {
             background-color: #343a40;
         }
+
         .nav-link {
             font-size: 1.1rem;
+        }
+
+        .container-fluid {
+            padding: 0;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .row {
+            margin: 0;
+            max-width: 100%;
         }
     </style>
 </head>

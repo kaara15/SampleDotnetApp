@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SampleDotnetApp.Hubs;
 using SampleDotnetApp.Models.DataModels;
 using SampleDotnetApp.Services;
 using SampleDotnetApp.Utilities;
@@ -84,7 +85,9 @@ builder.Services.Configure<ApplicationSettings>(builder.Configuration.GetSection
 builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<ApplicationSettings>>().Value);
 builder.Services.AddSingleton<ICacheFactory<DataCacheDataModel>, CacheFactory>();
 builder.Services.AddDbContext<ApplicationDBContext>(options => 
-    options.UseNpgsql(builder.Configuration.GetConnectionString("SQLConnectionString")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("SQLConnectionString"))
+);
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 if(app.Environment.IsDevelopment())
@@ -119,5 +122,6 @@ app.MapPost("api/minimal", async (HttpContext httpContext) =>
 });
 app.MapControllerRoute(name : "default", pattern : "{controller=Home}/{action=Index}/{id?}");
 app.MapControllers();
+app.MapHub<CallHub>("/callHub");
 
 app.Run();

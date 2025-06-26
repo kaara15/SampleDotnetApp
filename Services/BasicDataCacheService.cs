@@ -36,6 +36,19 @@ namespace SampleDotnetApp.Services
             return false;
         }
 
+        public IDictionary<string, DataCacheDataModel> GetFromCache(IEnumerable<string> keys)
+        {
+            IDictionary<string, DataCacheDataModel> dataCacheDataModelItems = new Dictionary<string, DataCacheDataModel>();
+            foreach(var key in keys)
+            {
+                if(dataCache.TryGetValue(key, out var dataCacheDataModelItem))
+                {
+                    dataCacheDataModelItems.TryAdd(key, dataCacheDataModelItem);
+                }
+            }
+            return dataCacheDataModelItems;
+        }
+
         public DataCacheDataModel GetFromCache(string key)
         {
             if(dataCache.TryGetValue(key, out var dataCacheDataModelItem))

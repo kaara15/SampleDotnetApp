@@ -57,6 +57,30 @@ namespace SampleDotnetApp.Services
             return false;
         }
 
+        public IDictionary<string, DataCacheDataModel> GetFromCache(IEnumerable<string> keys)
+        {
+            IDictionary<string, DataCacheDataModel> dataCacheDataModelItems = new Dictionary<string, DataCacheDataModel>();
+            foreach(var key in keys)
+            {
+                if(dataCache.TryGetValue(key, out DataCacheDataModel? dataCacheDataModel))
+                {
+                    dataCacheDataModelItems.TryAdd(key, dataCacheDataModel);
+                }
+                else
+                {
+                    using IServiceScope scope = serviceProvider.CreateScope();
+                    ApplicationDBContext applicationDBContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+                    DataCacheDataModel? dbDataCacheDataModel = applicationDBContext.DataCacheDataModels.Where(dataCacheDataModel => EF.Functions.ILike(dataCacheDataModel.Email, key)).FirstOrDefault();
+                    if(dbDataCacheDataModel != null)
+                    {
+                        dataCache[key] = dbDataCacheDataModel;
+                        dataCacheDataModelItems.TryAdd(key, dbDataCacheDataModel);
+                    }
+                }
+            }
+            return dataCacheDataModelItems;
+        }
+
         public DataCacheDataModel GetFromCache(string key)
         {
             if(dataCache.TryGetValue(key, out DataCacheDataModel? dataCacheDataModel))

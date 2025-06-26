@@ -74,7 +74,6 @@
 
 
         document.addEventListener('themeToggle', function (event) {
-            console.log(event)
             const newTheme = event.detail.message;
             if (newTheme === 'theme-dark') {
                 loginDiv.classList.remove('bg-white', 'text-dark');

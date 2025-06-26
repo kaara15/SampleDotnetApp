@@ -1,3 +1,174 @@
-<div>
-    
+@{
+    ViewData["Title"] = "Video Call";
+}
+<head>
+        <style>
+
+        .layout-container {
+            display: flex;
+            height: 100%;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .online-users-card {
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: none;
+            border-radius: 0;
+        }
+
+        .online-users-card .card-header {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .user-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: green;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .call-button {
+            display: inline-block;
+        }
+
+        .call-button.hidden {
+            display: none;
+        }
+
+        .theme-dark .online-users-card .card-header {
+            background-color: #343a40;
+            color: #ffbf00;
+            border-radius: 0px;
+        }
+
+        .theme-dark .list-group-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            border: none;
+            transition: background-color 0.3s ease;
+            background-color: #1a1a1c;
+            color: #ffffff;
+            border-radius: 0px;
+            min-height: 70px;
+        }
+
+        .theme-dark .list-group-item:hover {
+            background-color: #3d4146;
+        }
+
+        .theme-light .list-group-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            border: none;
+            transition: background-color 0.3s ease;
+            background-color: #ffffff;
+            color: #1a1a1c;
+            border-radius: 0px;
+            min-height: 70px;
+        }
+
+        .theme-light .list-group-item:hover {
+            background-color: #dbe0e9;
+        }
+
+        .spinner-border {
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<div class="layout-container">
+    <div class="main-content">
+    </div>
+    <div class="card online-users-card bg-light text-dark p-0" id="onlineList">
+        <div class="card-header">
+            Online Users
+            <span id="loadingIndicator" class="spinner-border spinner-border-sm text-primary ms-2" style="display: none;" role="status"></span>
+        </div>
+        <div class="card-body p-0">
+            <ul id="userList" class="list-group">
+            </ul>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const onlineListDiv = document.getElementById('onlineList');
+        const savedThemeCallComponent = localStorage.getItem('theme') || 'theme-light';
+
+        if (savedThemeCallComponent === 'theme-dark') {
+            onlineListDiv.classList.remove('bg-light', 'text-dark');
+            onlineListDiv.classList.add('theme-dark-secondary', 'text-light');
+        }
+
+        document.addEventListener('themeToggle', function (event) {
+            const newTheme = event.detail.message;
+            if (newTheme === 'theme-dark') {
+                onlineListDiv.classList.remove('bg-light', 'text-dark');
+                onlineListDiv.classList.add('theme-dark-secondary', 'text-light');
+            } else {
+                onlineListDiv.classList.remove('theme-dark-secondary', 'text-light');
+                onlineListDiv.classList.add('bg-light', 'text-dark');
+            }
+        });
+
+        let connection = new signalR.HubConnectionBuilder().withUrl("/callHub").build();
+        const currentUserEmail = '@ViewData["CurrentUserEmail"]';
+
+        connection.on("UserListUpdated", users => {
+            const list = document.getElementById("userList");
+            const loadingIndicator = document.getElementById("loadingIndicator");
+            loadingIndicator.style.display = "inline-block";
+            list.innerHTML = '';
+            const filteredUsers = users.filter(user => user.email !== currentUserEmail);
+            filteredUsers.forEach(user => {
+                const li = document.createElement("li");
+                li.className = "list-group-item";
+
+                const userInfo = document.createElement("div");
+                userInfo.className = "user-info";
+
+                const indicator = document.createElement("div");
+                indicator.className = "user-indicator";
+
+                const userDetails = document.createElement("span");
+                userDetails.textContent = `${user.fullName}`;
+
+                userInfo.appendChild(indicator);
+                userInfo.appendChild(userDetails);
+
+                const callButton = document.createElement("button");
+                callButton.className = "btn btn-primary call-button";
+                callButton.textContent = "Call";
+                callButton.onclick = () => {
+                    initiateCall(user.email);
+                    callButton.classList.add("hidden");
+                };
+
+                li.appendChild(userInfo);
+                li.appendChild(callButton);
+                list.appendChild(li);
+            });
+            loadingIndicator.style.display = "none";
+        });
+
+    </script>
+}

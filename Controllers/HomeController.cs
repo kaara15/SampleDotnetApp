@@ -22,6 +22,7 @@ namespace SampleDotnetApp.Controllers
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
+                ViewData["CurrentUserEmail"] = User.Identity.Name;
                 return View();
             }
             return RedirectToAction("Login", "Account");

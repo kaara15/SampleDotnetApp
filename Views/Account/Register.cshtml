@@ -92,7 +92,6 @@
         }
 
         document.addEventListener('themeToggle', function (event) {
-            console.log(event)
             const newTheme = event.detail.message;
             if (newTheme === 'theme-dark') {
                 registerDiv.classList.remove('bg-white', 'text-dark');
