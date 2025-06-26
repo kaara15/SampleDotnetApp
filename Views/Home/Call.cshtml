@@ -2,7 +2,7 @@
     ViewData["Title"] = "Video Call";
 }
 <head>
-        <style>
+    <style>
 
         .layout-container {
             display: flex;
@@ -169,6 +169,10 @@
             });
             loadingIndicator.style.display = "none";
         });
+
+        connection.start().then(() => {
+            console.log("Connected to SignalR hub");
+        }).catch(err => console.error(err));
 
     </script>
 }
